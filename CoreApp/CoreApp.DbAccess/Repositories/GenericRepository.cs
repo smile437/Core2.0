@@ -59,5 +59,10 @@ namespace CoreApp.DbAccess.Repos
         {
             this.entities.Remove(entity);
         }
+
+        public void Save()
+        {
+            this.context.SaveChanges();
+        }
     }
 }

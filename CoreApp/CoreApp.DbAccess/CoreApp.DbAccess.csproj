@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Compile Remove="Models\Type.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Context\" />
   </ItemGroup>
 

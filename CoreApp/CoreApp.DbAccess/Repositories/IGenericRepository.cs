@@ -15,7 +15,7 @@ namespace CoreApp.DbAccess.Repos
         IEnumerable<TEntity> GetRange(int start, int count, Expression<Func<TEntity, bool>> predicate);
 
         int Count();
-
+        void Save();
         void Add(TEntity entity);
         void Remove(TEntity entity);
     }
