@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoreApp.DbAccess.Migrations
 {
-    public partial class Init : Migration
+    public partial class Name : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace CoreApp.DbAccess.Migrations
                 columns: table => new
                 {
                     Code = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", 1/*SqlServerValueGenerationStrategy.IdentityColumn*/),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -27,7 +27,7 @@ namespace CoreApp.DbAccess.Migrations
                 columns: table => new
                 {
                     Code = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", 1/*SqlServerValueGenerationStrategy.IdentityColumn*/),
                     DeliveryDate = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     IsAvailable = table.Column<bool>(nullable: false),

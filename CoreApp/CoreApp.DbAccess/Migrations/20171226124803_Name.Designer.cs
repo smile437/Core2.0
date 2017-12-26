@@ -11,15 +11,15 @@ using System;
 namespace CoreApp.DbAccess.Migrations
 {
     [DbContext(typeof(ProdDbContext))]
-    [Migration("20171226123225_Init")]
-    partial class Init
+    [Migration("20171226124803_Name")]
+    partial class Name
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", 1/*SqlServerValueGenerationStrategy.IdentityColumn*/);
 
             modelBuilder.Entity("CoreApp.DbAccess.Models.Category", b =>
                 {
