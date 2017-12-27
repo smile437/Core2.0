@@ -18,6 +18,7 @@ namespace CoreApp.DbAccess.Interfaces
         int Count();
         void Save();
         void Add(TEntity entity);
-        void Remove(TEntity entity);
+        void Remove(int id);
+        void Update(int id, TEntity entity);
     }
 }

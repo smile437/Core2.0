@@ -1,4 +1,8 @@
 ﻿using CoreApp.DbAccess.Context;
+using CoreApp.DbAccess.Interfaces;
+using CoreApp.DbAccess.Models;
+using CoreApp.DbAccess.Repositories;
+using CoreApp.DbAccess.UnitOfWorks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,12 +27,23 @@ namespace CoreApp
             var connection = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ProdDbContext>(op=>op.UseSqlServer(connection));
 
+            //TODO: fix this shit
+            services.AddScoped(typeof(IGenericRepository<Category>), typeof(CategoryUOW));
+            services.AddScoped(typeof(IGenericRepository<ProductType>), typeof(ProductTypeUOW));
+            services.AddScoped(typeof(IGenericRepository<Product>), typeof(ProductUOW));
+            services.AddScoped(typeof(IGenericRepository<Unit>), typeof(UnitUOW));
+            //
+            services.AddScoped<CategoryUOW>();
+            services.AddScoped<ProductTypeUOW>();
+            services.AddScoped<ProductUOW>();
+            services.AddScoped<UnitUOW>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "SIENN Recruitment API"
+                    Title = "REST API"
                 });
             });
 
@@ -45,7 +60,7 @@ namespace CoreApp
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SIENN Recruitment API v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API v1");
             });
 
             app.UseMvc();

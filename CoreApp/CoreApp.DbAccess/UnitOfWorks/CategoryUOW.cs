@@ -7,11 +7,11 @@ using CoreApp.DbAccess.Models;
 
 namespace CoreApp.DbAccess.UnitOfWorks
 {
-    public class CategoryUnitOfWork
+    public class CategoryUOW
     {
         private readonly IGenericRepository<Category> unitRepository;
 
-        public CategoryUnitOfWork(IGenericRepository<Category> unitRepository)
+        public CategoryUOW(IGenericRepository<Category> unitRepository)
         {
             this.unitRepository = unitRepository;
         }
@@ -55,10 +55,15 @@ namespace CoreApp.DbAccess.UnitOfWorks
             this.unitRepository.Save();
         }
 
-        public virtual void Remove(Category entity)
+        public virtual void Remove(int id)
         {
-            this.unitRepository.Remove(entity);
+            this.unitRepository.Remove(id);
             this.unitRepository.Save();
+        }
+
+        public void Update(int id, Category entity)
+        {
+            this.unitRepository.Update(id,entity);
         }
     }
 }

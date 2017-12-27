@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using CoreApp.DbAccess.Models;
+using CoreApp.DbAccess.UnitOfWorks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreApp.Controllers
@@ -7,36 +9,46 @@ namespace CoreApp.Controllers
     [Route("api/Category")]
     public class CategoryController : Controller
     {
+        private readonly CategoryUOW unitUow;
+
+        public CategoryController(CategoryUOW category)
+        {
+            this.unitUow = category;
+        }
+
         // GET: api/Category
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Category> Get()
         {
-            return new [] { "value1", "value2" };
+            return this.unitUow.GetAll();
         }
 
         // GET: api/Category/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public Category Get(int id)
         {
-            return "value";
+            return this.unitUow.Get(id);
         }
         
         // POST: api/Category
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Category value)
         {
+            this.unitUow.Add(value);
         }
         
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Category value)
         {
+            this.unitUow.Update(id, value);
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
-        {
+        { 
+            this.unitUow.Remove(id);
         }
     }
 }

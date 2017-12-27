@@ -7,11 +7,11 @@ using CoreApp.DbAccess.Models;
 
 namespace CoreApp.DbAccess.UnitOfWorks
 {
-    public class ProductUnitOfWork
+    public class ProductUOW
     {
         private readonly IGenericRepository<Product> productRepository;
 
-        public ProductUnitOfWork(IGenericRepository<Product> productRepository)
+        public ProductUOW(IGenericRepository<Product> productRepository)
         {
             this.productRepository = productRepository;
         }
@@ -55,10 +55,15 @@ namespace CoreApp.DbAccess.UnitOfWorks
             this.productRepository.Save();
         }
 
-        public virtual void Remove(Product entity)
+        public virtual void Remove(int id)
         {
-            this.productRepository.Remove(entity);
+            this.productRepository.Remove(id);
             this.productRepository.Save();
+        }
+
+        public void Update(int id, Product entity)
+        {
+            this.productRepository.Update(id, entity);
         }
     }
 }

@@ -1,18 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreApp.DbAccess.Context;
 using CoreApp.DbAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
-namespace CoreApp.DbAccess.Repos
+namespace CoreApp.DbAccess.Repositories
 {
     public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
 
         private readonly DbSet<TEntity> entities;
-        private ProdDbContext context;
+        private readonly ProdDbContext context;
 
 
         protected GenericRepository(ProdDbContext context)
@@ -56,9 +55,17 @@ namespace CoreApp.DbAccess.Repos
             this.entities.Add(entity);
         }
 
-        public virtual void Remove(TEntity entity)
+        public virtual void Remove(int id)
         {
-            this.entities.Remove(entity);
+            var entity = this.Get(id);
+            this.context.Set<TEntity>().Remove(entity);
+            this.Save();
+        }
+
+        public void Update(int id, TEntity entity)
+        {
+            this.context.Set<TEntity>().Update(entity);
+            this.Save();
         }
 
         public void Save()
