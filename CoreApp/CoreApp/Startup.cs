@@ -20,8 +20,9 @@ namespace CoreApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connetction = this.Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ProdDbContext>(op=>op.UseSqlServer(connetction));
+            var connection = this.Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ProdDbContext>(op=>op.UseSqlServer(connection));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

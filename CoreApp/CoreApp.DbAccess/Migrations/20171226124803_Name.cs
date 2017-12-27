@@ -14,7 +14,7 @@ namespace CoreApp.DbAccess.Migrations
                 columns: table => new
                 {
                     Code = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", 1/*SqlServerValueGenerationStrategy.IdentityColumn*/),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -27,7 +27,7 @@ namespace CoreApp.DbAccess.Migrations
                 columns: table => new
                 {
                     Code = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", 1/*SqlServerValueGenerationStrategy.IdentityColumn*/),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DeliveryDate = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     IsAvailable = table.Column<bool>(nullable: false),

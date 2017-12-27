@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using CoreApp.DbAccess.Context;
+using CoreApp.DbAccess.Interfaces;
 
 namespace CoreApp.DbAccess.Repos
 {
@@ -25,22 +26,22 @@ namespace CoreApp.DbAccess.Repos
             return this.entities.Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IQueryable<TEntity> GetAll()
         {
-            return this.entities.ToList();
+            return this.entities;
         }
 
-        public virtual IEnumerable<TEntity> GetRange(int start, int count)
+        public virtual IQueryable<TEntity> GetRange(int start, int count)
         {
-            return this.entities.Skip(start).Take(count).ToList();
+            return this.entities.Skip(start).Take(count);
         }
 
-        public virtual IEnumerable<TEntity> GetRange(int start, int count, Expression<Func<TEntity, bool>> predicate)
+        public virtual IQueryable<TEntity> GetRange(int start, int count, Expression<Func<TEntity, bool>> predicate)
         {
-            return this.entities.Where(predicate).Skip(start).Take(count).ToList();
+            return this.entities.Where(predicate).Skip(start).Take(count);
         }
 
-        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return this.entities.Where(predicate);
         }
