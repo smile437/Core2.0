@@ -1,16 +1,15 @@
-﻿using CoreApp.DbAccess.Interfaces;
-using CoreApp.DbAccess.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using CoreApp.DbAccess.Interfaces;
+using CoreApp.DbAccess.Models;
 
 namespace CoreApp.DbAccess.UnitOfWorks
 {
     public class ProductUnitOfWork
     {
-        private IGenericRepository<Product> productRepository;
+        private readonly IGenericRepository<Product> productRepository;
 
         public ProductUnitOfWork(IGenericRepository<Product> productRepository)
         {
