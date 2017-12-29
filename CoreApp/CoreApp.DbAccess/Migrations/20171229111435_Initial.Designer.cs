@@ -11,7 +11,7 @@ using System;
 namespace CoreApp.DbAccess.Migrations
 {
     [DbContext(typeof(ProdDbContext))]
-    [Migration("20171228135013_Initial")]
+    [Migration("20171229111435_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,11 +52,9 @@ namespace CoreApp.DbAccess.Migrations
 
                     b.HasKey("Code");
 
-                    b.HasIndex("ProductTypeCode")
-                        .IsUnique();
+                    b.HasIndex("ProductTypeCode");
 
-                    b.HasIndex("UnitCode")
-                        .IsUnique();
+                    b.HasIndex("UnitCode");
 
                     b.ToTable("Products");
                 });
@@ -101,13 +99,13 @@ namespace CoreApp.DbAccess.Migrations
             modelBuilder.Entity("CoreApp.DbAccess.Models.Product", b =>
                 {
                     b.HasOne("CoreApp.DbAccess.Models.ProductType", "ProductType")
-                        .WithOne("Product")
-                        .HasForeignKey("CoreApp.DbAccess.Models.Product", "ProductTypeCode")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeCode")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CoreApp.DbAccess.Models.Unit", "Unit")
-                        .WithOne("Product")
-                        .HasForeignKey("CoreApp.DbAccess.Models.Product", "UnitCode")
+                        .WithMany()
+                        .HasForeignKey("UnitCode")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

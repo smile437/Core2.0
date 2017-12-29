@@ -110,14 +110,12 @@ namespace CoreApp.DbAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductTypeCode",
                 table: "Products",
-                column: "ProductTypeCode",
-                unique: true);
+                column: "ProductTypeCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UnitCode",
                 table: "Products",
-                column: "UnitCode",
-                unique: true);
+                column: "UnitCode");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -27,7 +27,6 @@ namespace CoreApp.Controllers
             return this.productUow.GetAll();
         }
 
-
         // method that returns available products(with pagination)
         [HttpGet("available")]
         public IActionResult GetAvailable(int? page)
