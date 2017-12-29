@@ -21,18 +21,13 @@ namespace CoreApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = this.Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ProdDbContext>(op=>op.UseSqlServer(connection));
 
-            //TODO: fix this shit
-            services.AddScoped(typeof(IGenericRepository<Category>), typeof(CategoryUOW));
-            services.AddScoped(typeof(IGenericRepository<ProductType>), typeof(ProductTypeUOW));
-            services.AddScoped(typeof(IGenericRepository<Product>), typeof(ProductUOW));
-            services.AddScoped(typeof(IGenericRepository<Unit>), typeof(UnitUOW));
-            //
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             services.AddScoped<CategoryUOW>();
             services.AddScoped<ProductTypeUOW>();
             services.AddScoped<ProductUOW>();
@@ -50,7 +45,6 @@ namespace CoreApp
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -64,6 +58,10 @@ namespace CoreApp
             });
 
             app.UseMvc();
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute("default", "api/{controller=Product}/{action=Get}/{id?}");
+            //});
         }
     }
 }

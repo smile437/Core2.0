@@ -11,8 +11,8 @@ using System;
 namespace CoreApp.DbAccess.Migrations
 {
     [DbContext(typeof(ProdDbContext))]
-    [Migration("20171226124803_Name")]
-    partial class Name
+    [Migration("20171228135013_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,7 +46,17 @@ namespace CoreApp.DbAccess.Migrations
 
                     b.Property<double>("Price");
 
+                    b.Property<int>("ProductTypeCode");
+
+                    b.Property<int>("UnitCode");
+
                     b.HasKey("Code");
+
+                    b.HasIndex("ProductTypeCode")
+                        .IsUnique();
+
+                    b.HasIndex("UnitCode")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });
@@ -66,7 +76,8 @@ namespace CoreApp.DbAccess.Migrations
 
             modelBuilder.Entity("CoreApp.DbAccess.Models.ProductType", b =>
                 {
-                    b.Property<int>("Code");
+                    b.Property<int>("Code")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
 
@@ -77,13 +88,27 @@ namespace CoreApp.DbAccess.Migrations
 
             modelBuilder.Entity("CoreApp.DbAccess.Models.Unit", b =>
                 {
-                    b.Property<int>("Code");
+                    b.Property<int>("Code")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
 
                     b.HasKey("Code");
 
                     b.ToTable("Units");
+                });
+
+            modelBuilder.Entity("CoreApp.DbAccess.Models.Product", b =>
+                {
+                    b.HasOne("CoreApp.DbAccess.Models.ProductType", "ProductType")
+                        .WithOne("Product")
+                        .HasForeignKey("CoreApp.DbAccess.Models.Product", "ProductTypeCode")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CoreApp.DbAccess.Models.Unit", "Unit")
+                        .WithOne("Product")
+                        .HasForeignKey("CoreApp.DbAccess.Models.Product", "UnitCode")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CoreApp.DbAccess.Models.ProductCategory", b =>
@@ -96,22 +121,6 @@ namespace CoreApp.DbAccess.Migrations
                     b.HasOne("CoreApp.DbAccess.Models.Product", "Product")
                         .WithMany("Categories")
                         .HasForeignKey("ProductCode")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("CoreApp.DbAccess.Models.ProductType", b =>
-                {
-                    b.HasOne("CoreApp.DbAccess.Models.Product")
-                        .WithOne("ProductType")
-                        .HasForeignKey("CoreApp.DbAccess.Models.ProductType", "Code")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("CoreApp.DbAccess.Models.Unit", b =>
-                {
-                    b.HasOne("CoreApp.DbAccess.Models.Product")
-                        .WithOne("Unit")
-                        .HasForeignKey("CoreApp.DbAccess.Models.Unit", "Code")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

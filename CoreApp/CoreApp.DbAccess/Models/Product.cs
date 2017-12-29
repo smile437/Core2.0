@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreApp.DbAccess.Models
 {
@@ -17,13 +18,17 @@ namespace CoreApp.DbAccess.Models
 
         public DateTime DeliveryDate { get; set; }
 
-
-        
         public ICollection<ProductCategory> Categories { get; set; }
 
-        public ProductType ProductType { get; set; }
+        [ForeignKey("ProductType")]
+        public int ProductTypeCode { get; set; }
 
-        public Unit Unit { get; set; }
+        public virtual ProductType ProductType { get; set; }
+
+        [ForeignKey("Unit")]
+        public int UnitCode { get; set; }
+
+        public virtual Unit Unit { get; set; }
 
         public Product()
         {

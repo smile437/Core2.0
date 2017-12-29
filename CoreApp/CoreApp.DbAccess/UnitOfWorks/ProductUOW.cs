@@ -18,13 +18,39 @@ namespace CoreApp.DbAccess.UnitOfWorks
 
         public Product Get(int id)
         {
-            return this.productRepository.Get(id);
+            var query = this.productRepository.GetAll(x => x.ProductType, x => x.Unit);
+            var product= query.FirstOrDefault(p => p.Code == id);
+            return product;
         }
 
-        public virtual IEnumerable<Product> GetAll()
+        public IEnumerable<Product> GetAll()
         {
-            var query = this.productRepository.GetAll();
+            var query = this.productRepository.GetAll(x => x.ProductType, x => x.Unit);
             return query.ToList();
+        }
+
+        //this method will display only available products
+        public IEnumerable<Product> GetAvailable()
+        {
+            var query = this.productRepository.GetAll().Where(p => p.IsAvailable == true);
+            return query.ToList();
+        }
+
+        //filter by type, category and entity
+        public IEnumerable<Product> GetFilteringProducts(ProductFilter filteringParams)
+        {
+            var query = this.productRepository.GetAll(x => x.ProductType, x => x.Unit);
+
+            if (filteringParams.FilterByType.Any())
+                query = query.Where(x => filteringParams.FilterByType.Contains(x.ProductType.Description));
+
+            if (filteringParams.FilterByCategory.Any())
+                query = query.Where(x => x.Categories.Where(c => filteringParams.FilterByCategory.Contains(c.Category.Description)).Any());
+
+            if (filteringParams.FilterByEntity.Any())
+                query = query.Where(x => filteringParams.FilterByEntity.Contains(x.Description));
+
+            return query;
         }
 
         public IEnumerable<Product> GetRange(int start, int count)

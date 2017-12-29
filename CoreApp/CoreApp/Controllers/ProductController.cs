@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using CoreApp.Currency.Core;
 using CoreApp.DbAccess.Models;
 using CoreApp.DbAccess.UnitOfWorks;
+using CoreApp.RequestModels;
+using CoreApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreApp.Controllers
@@ -21,6 +25,41 @@ namespace CoreApp.Controllers
         public IEnumerable<Product> Get()
         {
             return this.productUow.GetAll();
+        }
+
+
+        // method that returns available products(with pagination)
+        [HttpGet("available")]
+        public IActionResult GetAvailable(int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
+            var products = this.productUow.GetAvailable();
+            var count = products.Count();
+            var items = products.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            var pageViewModel = new PageViewModel(count, pageNumber, pageSize);
+            var viewModel = new IndexViewModel { PageViewModel = pageViewModel, Products = items };
+
+            return Ok(viewModel);
+        }
+
+        [HttpGet("filter")]
+        public IEnumerable<Product> GetFilteringProducts(ProductFilteringParams filteringParams)
+        {
+            return this.productUow.GetFilteringProducts(filteringParams);
+        }
+
+        [HttpGet("format/{id}",Name ="GetFormat")]
+        //[Route("api/Product/Format")]
+        public ProductFormatedViewModel GetProductInFormat(int id)
+        {
+            // TODO: provide a factory that should retrieve a strategy 
+            // depending on either a parameter received from clients 
+            // or an appropriete HTTP header
+            var product = this.productUow.Get(id);
+            return new ProductFormatedViewModel(product, new ZlotyExchangeStrategy());
         }
 
         // GET: api/Product/5

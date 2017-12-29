@@ -11,7 +11,7 @@ namespace CoreApp.DbAccess.Interfaces
         TEntity Get(int id);
 
         IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
         IQueryable<TEntity> GetRange(int start, int count);
         IQueryable<TEntity> GetRange(int start, int count, Expression<Func<TEntity, bool>> predicate);
 

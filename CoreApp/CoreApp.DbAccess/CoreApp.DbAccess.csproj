@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20171228132645_Name.cs" />
+    <Compile Remove="Migrations\20171228134030_Initial.cs" />
     <Compile Remove="Models\Type.cs" />
   </ItemGroup>
 

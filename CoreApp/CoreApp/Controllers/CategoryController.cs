@@ -24,7 +24,7 @@ namespace CoreApp.Controllers
         }
 
         // GET: api/Category/5
-        [HttpGet("{id}", Name = "Get")]
+        //[HttpGet("{id}", Name = "Get")]
         public Category Get(int id)
         {
             return this.unitUow.Get(id);

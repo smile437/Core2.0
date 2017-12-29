@@ -7,55 +7,58 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoreApp.DbAccess.Repositories
 {
-    public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-
-        private readonly DbSet<TEntity> entities;
         private readonly ProdDbContext context;
+        private readonly DbSet<TEntity> entities;
 
 
-        protected GenericRepository(ProdDbContext context)
+        public GenericRepository(ProdDbContext context)
         {
             this.context = context;
             this.entities = context.Set<TEntity>();
         }
 
-        public virtual TEntity Get(int id)
+        public TEntity Get(int id)
         {
             return this.entities.Find(id);
         }
 
-        public virtual IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
         {
-            return this.entities;
+            var query = this.entities.AsQueryable();
+            foreach (var include in includes)
+                query = query.Include(include);
+
+            return query;
         }
 
-        public virtual IQueryable<TEntity> GetRange(int start, int count)
+        public IQueryable<TEntity> GetRange(int start, int count)
         {
             return this.entities.Skip(start).Take(count);
         }
 
-        public virtual IQueryable<TEntity> GetRange(int start, int count, Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> GetRange(int start, int count, Expression<Func<TEntity, bool>> predicate)
         {
             return this.entities.Where(predicate).Skip(start).Take(count);
         }
 
-        public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return this.entities.Where(predicate);
         }
 
-        public virtual int Count()
+        public int Count()
         {
             return this.entities.Count();
         }
 
-        public virtual void Add(TEntity entity)
+        public void Add(TEntity entity)
         {
             this.entities.Add(entity);
         }
 
-        public virtual void Remove(int id)
+        public void Remove(int id)
         {
             var entity = this.Get(id);
             this.context.Set<TEntity>().Remove(entity);

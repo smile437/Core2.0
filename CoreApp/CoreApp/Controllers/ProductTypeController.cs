@@ -24,11 +24,11 @@ namespace CoreApp.Controllers
         }
 
         // GET: api/ProductType/5
-        [HttpGet("{id}", Name = "Get")]
+        //[HttpGet("{id}", Name = "Get")]
         public ProductType Get(int id)
         {
             return this.productTypeUow.Get(id);
-        }
+        } 
 
         // POST: api/ProductType
         [HttpPost]
