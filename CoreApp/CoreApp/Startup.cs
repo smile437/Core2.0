@@ -57,7 +57,6 @@ namespace CoreApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API v1");
             });
 
-            //app.UseMvc();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
