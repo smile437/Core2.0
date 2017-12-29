@@ -11,9 +11,10 @@ using System;
 namespace CoreApp.DbAccess.Migrations
 {
     [DbContext(typeof(ProdDbContext))]
-    partial class ProdDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171229113032_name3")]
+    partial class name3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
