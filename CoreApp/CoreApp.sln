@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreApp", "CoreApp\CoreApp.csproj", "{65599BD6-AD1C-42D4-A145-C7167EDD80EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreApp.DbAccess", "CoreApp.DbAccess\CoreApp.DbAccess.csproj", "{136D955E-855D-42BC-9B29-C750D3B6897A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreApp.DbAccess", "CoreApp.DbAccess\CoreApp.DbAccess.csproj", "{136D955E-855D-42BC-9B29-C750D3B6897A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLQueries", "SQLQueries", "{AB4A3832-34AF-426B-9B26-90129B77ACB4}"
+	ProjectSection(SolutionItems) = preProject
+		available_with_multiple_categories.sql = available_with_multiple_categories.sql
+		top_3_categories.sql = top_3_categories.sql
+		unavailable_yet_to_deliver_in_current_month.sql = unavailable_yet_to_deliver_in_current_month.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
